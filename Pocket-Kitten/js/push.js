@@ -61,6 +61,8 @@ var CatsService = function CatsService() {
 
         // Get what we got from the server and put it as new image
         image.src = data;
+
+        Notifications.notify();
       }
     );
   };
