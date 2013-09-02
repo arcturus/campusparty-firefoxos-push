@@ -1,5 +1,8 @@
 // Perform a request against the simplepushclient server
 var doRequest = function doPost(type, uri, data, cb) {
+  if (uri.indexOf('http://') != 0) {
+    uri = 'http://catservice.eu01.aws.af.cm' + uri;
+  }
   var xhr = new XMLHttpRequest({mozSystem: true});
 
   xhr.onload = function onLoad(evt) {

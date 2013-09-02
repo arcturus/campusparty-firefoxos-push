@@ -46,16 +46,21 @@ var SimplePush = function SimplePush() {
 */
 var CatsService = function CatsService() {
 
+  var image = document.getElementById('kitten-image');
+
   // New message received, go for it
   var onPushMessage = function onPushMessage(endPoint, version) {
     //We get a new version, in our case, we will go with that
     //version number and fetch a new image
-    doRequest('GET', '/get/' + version + '/?endPoint=' + endPoint, null,
+    doRequest('GET', '/api/v1/' + version + '/?client=' + endPoint, null,
       function onResponse(err, data) {
         if (err) {
           // If fail, quit silently
           return;
         }
+
+        // Get what we got from the server and put it as new image
+        image.src = data;
       }
     );
   };
@@ -65,7 +70,7 @@ var CatsService = function CatsService() {
   var registerEndPoint = function registerEndPoint(endPoint, cb) {
     var data = new FormData();
     data.append('client', endPoint);
-    doRequest('POST', '/register', data, cb);
+    doRequest('POST', '/api/v1/register', data, cb);
   };
 
   return {
@@ -88,5 +93,7 @@ if (!localStorage.endpoint) {
     if (err) {
       alert(err);
     }
+
+    console.log('Subscribed :: ' + JSON.stringify(data));
   });
 }

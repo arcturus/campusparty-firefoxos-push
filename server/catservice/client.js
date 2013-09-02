@@ -97,7 +97,7 @@ var Client = function Client() {
     messages.remove({'client': params.client}).done(function onDone(obj) {
       // TODO: Unregister from push notification server
       res.send(200, obj);
-    });    
+    });
   };
 
   var send = function send(req, res) {
@@ -129,18 +129,18 @@ var Client = function Client() {
         return;
       }
 
-      var messages = obj.history;
-      if (messages.length <= index) {
+      var msgs = obj.history;
+      if (msgs.length <= index) {
         res.send(404, 'No such message');
         return;
       }
 
-      res.send(200, messages[index]);
+      res.send(200, msgs[index]);
     });
   };
 
   var dump = function dump(req, res) {
-    messages.find({}).toArray().done(function onDone(msgs) {
+    messages.find().toArray().done(function onDone(msgs) {
       res.send(200, msgs);
     });
   };
